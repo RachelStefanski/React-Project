@@ -1,0 +1,163 @@
+/* כל ספר בודד */
+.book {
+  width: 340px;          /* רוחב אחיד */
+  height: 450px;         /* גובה אחיד */
+  position: relative;
+  background-color: #fdfdfd;  /* צבע רקע אחיד */
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 10px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s ease;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.book:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
+/* כותרת */
+.book h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #2c3e50;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 5px;
+}
+
+/* טקסט רגיל */
+.book p {
+  font-size: 1em;
+  color: #444;
+  margin: 6px 0;
+  flex-shrink: 0; /* מונע כיווץ */
+}
+
+.book p strong {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* צבע להנחה */
+.book .discount {
+  color: #444;
+  font-weight: bold;
+}
+
+/* מחיר סופי לאחר הנחה */
+.book .final-price {
+  color: #61e73c; /* אדום בולט */
+  font-weight: 900;
+  font-size: 1.5rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* מחיר רגיל עם פס חוצה כאשר יש מבצע */
+.book .price-regular {
+  font-size: 1rem;
+  color: #999;
+  text-decoration: line-through;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+/* ספר עם פרטים חסרים */
+.book.incomplete {
+  background-color: #f2f2f2;
+  color: #888;
+  opacity: 0.7;
+}
+
+/* מבצע לא משנה צבע לקומפוננטה */
+.book.on-sale {
+  background-color: #fdfdfd; /* רקע רגיל */
+  border: 1px solid #ddd;
+}
+
+/* תווית SALE באלכסון מימין */
+.book .sale-ribbon {
+  position: absolute;
+  top: 15px;
+  right: -40px;  /* מימין במקום שמאל */
+  background: #e74c3c; /* אדום אחיד */
+  color: white;
+  padding: 8px 60px;
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  border-radius: 12px; /* קצוות עגולים */
+  transform: rotate(45deg); /* סיבוב בכיוון הפוך */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* כפתור הוספה לסל */
+.Addbook-button {
+  width: 100%;
+  padding: 12px 0;
+  margin-top: auto; /* דוחף את הכפתור לתחתית */
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(90deg, #4caf50, #388e3c);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 8px rgba(72, 180, 97, 0.4);
+}
+
+.Addbook-button:hover:not(:disabled) {
+  background: linear-gradient(90deg, #388e3c, #2e7d32);
+}
+
+/* כפתור מושבת - אפור */
+.Addbook-button:disabled {
+  background-color: #a9a9a9;
+  color: #666666;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.book.out-of-stock {
+  opacity: 1;
+  pointer-events: none; /* מונע אינטראקציות */
+}
+
+.book.out-of-stock h2,
+.book.out-of-stock p,
+.book.out-of-stock .discount,
+.book.out-of-stock .price-regular,
+.book.out-of-stock .final-price {
+  color: #888 !important;
+}
+/* כפתור לב */
+.heart-button {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.heart-button.liked {
+  color: #c2185b;
+  transform: scale(1.2);
+}
+
+/* קומפוננטה אהובה */
+.book.liked {
+  background-color: #ffe6f0;
+  border: 2px solid #f48fb1;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}

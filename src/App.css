@@ -1,38 +1,80 @@
+/* עיצוב כללי לאפליקציה */
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+/* כותרת עליונה */
+.App-header {
+  background: linear-gradient(to right, #4a90e2, #357ABD);
   color: white;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.App-link {
-  color: #61dafb;
+.App-header h1 {
+  font-size: 3em;
+  margin: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.App-header p {
+  font-size: 1.2em;
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+/* קישורי ניווט */
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  background-color: #fff;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #357ABD;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #e67e22;
+}
+
+/* קונטיינר של הספרים */
+.books-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  padding: 30px 60px;
+}
+
+/* באנר או הודעה */
+.banner {
+  background-color: #ffeaa7;
+  color: #2d3436;
+  padding: 15px;
+  text-align: center;
+  font-size: 1.1em;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+/* התאמה לרספונסיביות */
+@media (max-width: 768px) {
+  .books-container {
+    justify-content: center;
+    padding: 20px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .App-header h1 {
+    font-size: 2em;
   }
 }
