@@ -1,0 +1,8 @@
+.rating {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+}
+.rating svg {
+  margin-right: 2px;
+}

@@ -1,8 +1,17 @@
-import Book from './Components/Book.js';
 import './App.css';
-import BookList from './Components/BookList.js';
+import BookList from './Components/BookList';
+import AddBook from './Components/AddBook';
+import { useState, useRef } from 'react';
 
 function App() {
+  const bookListRef = useRef(); // 💡 הוספנו!
+  const [showAddBook, setShowAddBook] = useState(false);
+
+  const handleAddBook = (book) => {
+    bookListRef.current.addBook(book); // קורא לפונקציית BookList
+    setShowAddBook(false); // סגירת הטופס
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -17,12 +26,25 @@ function App() {
       </nav>
 
       <div className="banner">
-        📚 Summer Sale! 20% Off All New Books📚
+        📚 Summer Sale! 20% Off All New Books 📚
       </div>
 
-      <div className="books-container">
-        {BookList.map((book, index) => (<Book key={index} {...book} />))}
-      </div>
+      {/* רק פעם אחת! */}
+      <BookList ref={bookListRef} />
+
+      <div className="add-book-toggle">
+        <button
+          className="floating-add-button"
+          onClick={() => setShowAddBook(prev => !prev)}
+        >
+          ➕ Add new book
+        </button>
+
+        {showAddBook && (
+          <div className="add-book-popup">
+            <AddBook onAddBook={handleAddBook} />
+          </div>
+        )}      </div>
     </div>
   );
 }
