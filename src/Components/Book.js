@@ -16,28 +16,21 @@ function Book({
   onAdd,
   numOfRaitings = 0,
   sumOfRaitings = 0,
+  onRate
 }) {
   const [liked, setLiked] = useState(false);
   const [showRatingPanel, setShowRatingPanel] = useState(false);
   const [hoveredStar, setHoveredStar] = useState(0);
-  const [selectedRating, setSelectedRating] = useState(null);
-  const [localNum, setLocalNum] = useState(numOfRaitings);
-  const [localSum, setLocalSum] = useState(sumOfRaitings);
 
-  const rating = localNum > 0 ? localSum / localNum : 0;
+
+
+  const rating = numOfRaitings > 0 ? sumOfRaitings / numOfRaitings : 0;
   const finalPrice = Number(price) * ((100 - Number(discount)) / 100);
   const isOnSale = discount > 0;
   const isOutOfStock = amount === 0;
   const isIncomplete = !nameb || !price || !published_date;
 
   const className = `book${isIncomplete ? " incomplete" : ""}${isOnSale ? " on-sale" : ""}${isOutOfStock ? " out-of-stock" : ""}${liked ? " liked" : ""}`;
-
-  const handleRate = (value) => {
-    setSelectedRating(value);
-    setLocalNum(prev => prev + 1);
-    setLocalSum(prev => prev + value);
-    setShowRatingPanel(false); // סגירה אחרי דירוג
-  };
 
   return (
     <div className={className}>
@@ -75,31 +68,34 @@ function Book({
       <button className="small-button delete-button" onClick={() => onDelete(id)}>🗑️</button>
 
       {/* דירוג */}
-      <StarRating rating={rating} numOfRatings={localNum} />
+      <StarRating rating={rating} numOfRatings={numOfRaitings} />
 
-      <button onClick={() => setShowRatingPanel(prev => !prev)}>
-        {showRatingPanel ? "Cancel Rating" : "⭐ Rate Book"}
-      </button>
+<button onClick={() => setShowRatingPanel(prev => !prev)}>
+  {showRatingPanel ? "Cancel Rating" : "⭐ Rate Book"}
+</button>
 
-      {showRatingPanel && (
-        <div className="rate-stars-panel">
-          {[1, 2, 3, 4, 5].map((val) => (
-            <span
-              key={val}
-              style={{
-                cursor: 'pointer',
-                fontSize: '1.5em',
-                color: hoveredStar >= val || selectedRating >= val ? '#f5c518' : '#ccc',
-              }}
-              onMouseEnter={() => setHoveredStar(val)}
-              onMouseLeave={() => setHoveredStar(0)}
-              onClick={() => handleRate(val)}
-            >
-              ★
-            </span>
-          ))}
-        </div>
-      )}
+{showRatingPanel && (
+  <div className="rate-stars-panel">
+    {[1, 2, 3, 4, 5].map((val) => (
+      <span
+        key={val}
+        style={{
+          cursor: 'pointer',
+          fontSize: '1.5em',
+          color: hoveredStar >= val ? '#f5c518' : '#ccc',
+        }}
+        onMouseEnter={() => setHoveredStar(val)}
+        onMouseLeave={() => setHoveredStar(0)}
+        onClick={() => {
+          onRate(id, val);         // עדכון הדירוג דרך BookList
+          setShowRatingPanel(false); // סגירת הפאנל
+        }}
+      >
+        ★
+      </span>
+    ))}
+  </div>
+)}
 
       {/* הוספה לעגלה */}
       <button
