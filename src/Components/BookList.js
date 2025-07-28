@@ -1,5 +1,8 @@
+// BookList.js
 import React from 'react';
 import Book from './Book.js';
+import TopBooks from './TopBooks.js';
+import './BookList.css';
 
 function BookList({ books, setBooks }) {
   const maxRating = (books) => {
@@ -8,7 +11,6 @@ function BookList({ books, setBooks }) {
       const avgB = b.numOfRaitings ? b.sumOfRaitings / b.numOfRaitings : 0;
       return avgB - avgA;
     });
-
     return sortedBooks.slice(0, 3);
   };
 
@@ -19,7 +21,6 @@ function BookList({ books, setBooks }) {
     const book = books.find(b => b.id === id);
     if (!book) return;
     const newAmount = book.amount + 1;
-    // עדכון בשרת
     const res = await fetch(`/api/books/${id}/amount`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -27,7 +28,6 @@ function BookList({ books, setBooks }) {
     });
     if (res.ok) {
       const updatedBook = await res.json();
-      // עדכון בצד הקליינט
       setBooks(prev =>
         prev.map(b => b.id === id ? { ...b, amount: updatedBook.amount } : b)
       );
@@ -36,34 +36,31 @@ function BookList({ books, setBooks }) {
     }
   };
 
-const handleRate = async (id, rate) => {
-  const book = books.find(b => b.id === id);
-  if (!book) return;
+  const handleRate = async (id, rate) => {
+    const book = books.find(b => b.id === id);
+    if (!book) return;
 
-  const updatedBook = {
-    ...book,
-    sumOfRaitings: book.sumOfRaitings + rate,
-    numOfRaitings: book.numOfRaitings + 1,
+    const updatedBook = {
+      ...book,
+      sumOfRaitings: book.sumOfRaitings + rate,
+      numOfRaitings: book.numOfRaitings + 1,
+    };
+
+    await fetch(`/api/books/${id}/rate`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rate }),
+    });
+
+    setBooks(prev =>
+      prev.map(b => b.id === id ? updatedBook : b)
+    );
   };
-
-//שליחה לשרת
-await fetch(`/api/books/${id}/rate`, {
-  method: "PUT",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ rate })  // שלחי רק את הדירוג
-});
-
-//עדכון בריאקט
-  setBooks(prev =>
-    prev.map(b => b.id === id ? updatedBook : b)
-  );
-};
-
 
   const deleteBook = async (id) => {
     const book = books.find(b => b.id === id);
     if (!book) return;
-    // שליחת בקשת מחיקה לשרת
+
     const res = await fetch(`/api/books/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" }
@@ -77,27 +74,47 @@ await fetch(`/api/books/${id}/rate`, {
   };
 
   return (
-    <div className="books-container">
-      <h2>📚 Top 3 Rated Books</h2>
-      {top3Books.map((book) => (
-        <Book
-          key={book.id}
-          {...book}
+    <div className="books-main-container">
+      {/* Top 3 Books Section */}
+      {top3Books.length > 0 && (
+        <TopBooks
+          books={top3Books}
           onIncreaseAmount={increaseAmount}
           onDelete={deleteBook}
           onRate={handleRate}
         />
-      ))}
-      <h2>📚 All Books</h2>
-      {restBooks.map((book) => (
-        <Book
-          key={book.id}
-          {...book}
-          onIncreaseAmount={increaseAmount}
-          onDelete={deleteBook}
-          onRate={handleRate}
-        />
-      ))}
+      )}
+      
+      {/* All Other Books Section */}
+      <div className="all-books-section">
+        <div className="all-books-header">
+          <h2 className="all-books-title">
+            <span className="books-icon">📚</span>
+            All books
+            <span className="books-count">{restBooks.length}</span>
+          </h2>
+          <p className="all-books-subtitle">Discover our entire collection</p>
+        </div>
+        
+        {restBooks.length > 0 ? (
+          <div className="all-books-grid">
+            {restBooks.map((book) => (
+              <Book
+                key={book.id}
+                {...book}
+                onIncreaseAmount={increaseAmount}
+                onDelete={deleteBook}
+                onRate={handleRate}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <div className="empty-icon">📖</div>
+            <h3>No more books</h3>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

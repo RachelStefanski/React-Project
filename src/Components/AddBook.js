@@ -11,6 +11,8 @@ function AddBook({ onAddBook }) {
     amount: 0,
     discount: 0,
     price: 0,
+    numOfRaitings: 10,
+    sumOfRaitings: 50
   });
 
   const handleInputChange = (e) => {
@@ -36,9 +38,11 @@ function AddBook({ onAddBook }) {
     const bookToSend = {
       ...newBook,
       published_date: new Date(newBook.published_date),
+      numOfRaitings: 0,
+      sumOfRaitings: 0,
     };
 
-const res = await fetch("/api/books", {
+    const res = await fetch("/api/books", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(bookToSend),
@@ -49,7 +53,7 @@ const res = await fetch("/api/books", {
       data.published_date = new Date(data.published_date); // ✅ להמיר ל- Date
       console.log("Book added:", data);
       onAddBook(data); // שליחה ל-App
-      
+
       // ניקוי הטופס:
       setNewBook({
         nameb: "",

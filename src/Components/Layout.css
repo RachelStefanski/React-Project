@@ -1,0 +1,80 @@
+/* .App {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  background-color: #4a90e2;
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 0.75rem;
+  gap: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-weight: bold;
+}
+
+.navbar a {
+  color: #4a4a4a;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #4a90e2;
+}
+
+.banner {
+  background-color: #ffe0b2;
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 1rem;
+  color: #7a4a00;
+  font-weight: 500;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.add-book-toggle {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.floating-add-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.floating-add-button:hover {
+  background-color: #357ab8;
+}
+
+.add-book-popup {
+  margin-top: 1.5rem;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+} */
